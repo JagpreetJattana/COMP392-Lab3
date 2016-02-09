@@ -28,22 +28,26 @@ gulp.task('transpile', function () {
         .on('error', gutil.log);
 
     tsResult.dts.pipe(gulp.dest('./Scripts/'));
-    return tsResult.js
+return tsResult.js
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./Scripts/'))
-        .on('error', gutil.log)   
+        .on('error', gutil.log)
+        .pipe(connect.reload());
+   
 });
 
 // This task reloads the browser when any changes occur to html pages
 gulp.task("html", function () {
     gutil.log("html changed...");
-    gulp.src(HTMLSources).pipe(connect.reload());
+    gulp.src(HTMLSources)
+        .pipe(connect.reload());
 });
 
 // This task reloads the browser when any changes occur to css files
 gulp.task('css', function(){
    gutil.log("css files changed...");
-   gulp.src(CSSSources).pipe(connect.reload());
+   gulp.src(CSSSources)
+   .pipe(connect.reload()); 
 });
 // This task watches .ts .js and .html files for any changes
 gulp.task("watch", function () {
